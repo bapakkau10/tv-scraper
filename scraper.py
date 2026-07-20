@@ -15,7 +15,7 @@ def update_kv(m3u8_url):
     try:
         response = requests.put(url, data=m3u8_url, headers=headers)
         if response.status_code == 200:
-            print("Berjaya update link ke KV!")
+            print(f"Berjaya update link ke KV! Link: {m3u8_url}")
         else:
             print(f"Gagal update: {response.text}")
     except Exception as e:
@@ -24,14 +24,17 @@ def update_kv(m3u8_url):
 def get_m3u8_link():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        # Guna user_agent supaya nampak macam browser biasa
         context = browser.new_context(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36")
         page = context.new_page()
 
         def handle_request(request):
-            if ".m3u8" in request.url and "token=" in request.url:
-                print(f"Jumpa link: {request.url}")
-                update_kv(request.url)
+            # Logik baru: Cari link .m3u8 yang nampak seperti Master Playlist
+            # Kita cari link yang ada 'master' ATAU yang tiada 'token'
+            url = request.url
+            if ".m3u8" in url:
+                if "master" in url or "token=" not in url:
+                    print(f"Jumpa potensi Master Playlist: {url}")
+                    update_kv(url)
 
         page.on("request", handle_request)
         try:
