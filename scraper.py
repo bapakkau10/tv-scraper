@@ -2,9 +2,9 @@ import os
 import requests
 from playwright.sync_api import sync_playwright
 
-ACCOUNT_ID = os.environ.get("f136062d5216a667c849fce3f3feb4c6")
-NAMESPACE_ID = os.environ.get("4f79afe4475c4d188bb9fc570e558c2b")
-API_TOKEN = os.environ.get("cfut_6GdQu6KyO2iEo3A6XDcGhM8Rh6JtVrKtIW86nBdj5e815223")
+ACCOUNT_ID = os.environ.get("ACCOUNT_ID")
+NAMESPACE_ID = os.environ.get("NAMESPACE_ID")
+API_TOKEN = os.environ.get("API_TOKEN")
 
 def update_kv(m3u8_url):
     url = f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/storage/kv/namespaces/{NAMESPACE_ID}/values/live_m3u8"
