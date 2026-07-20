@@ -1,0 +1,29 @@
+name: Scraper Job
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install requests playwright
+          playwright install chromium
+
+      - name: Run scraper
+        env:
+          ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }}
+          NAMESPACE_ID: ${{ secrets.NAMESPACE_ID }}
+          API_TOKEN: ${{ secrets.API_TOKEN }}
+        run: python scraper.py
