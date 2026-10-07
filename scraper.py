@@ -106,6 +106,14 @@ def main():
         "TV8": {
             "url": "https://malaysia-tv.net/8-tv/",
             "kv": "tv8_m3u8"
+
+         },
+
+        # SiaraTV
+        "SiaraTV": {
+            "url": "https://tv3live.my/siara-tv/",
+            "kv": "siaratv_m3u8"
+            
         },
 
         # TV9
